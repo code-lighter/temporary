@@ -1,8 +1,54 @@
+ConnectingSigninRegister:
+    SigninWindow:
+    HomePage:
+    RegisterWindow:
+
+
+
+
 <FlatButton@ButtonBehavior+Label>:
     font_size:16
 
 
+<HomePage>:
+    name:"homepage"
+    orientation:"vertical"
+    canvas.before:
+        Color:
+            rgba: 1,1,1,1
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
+    Label:
+        color: 0,0,0,1
+        text:"Welcome to Homepage"
+        font_size :'20'
+
+    Button:
+        text: "Signout"
+        size_hint_y:None
+        size_hint_x:None
+        height: 40
+        background_color: (.06,.45,.45,1)
+        background_normal: ""
+        pos_hint: {'right': 1, 'top': 1}
+        on_release: app.root.current="login"
+
+
+    Image:
+        source:'msme.png'
+        keep_ratio: False
+        allow_stretch: True
+        opacity: 0.8
+        size_hint: 0.25, 0.25
+        pos_hint: {'center_x': .14, 'center_y': .14}
+
+
+
+
 <SigninWindow>:
+    name:"login"
     id:main_win
     orientation: "vertical"
     spacing: 10
@@ -10,7 +56,7 @@
 
     canvas.before:
         Color:
-            rgba: (1,1,1,1)
+            rgba:
 
         Rectangle:
             size: self.size
@@ -35,6 +81,7 @@
         FlatButton:
             text: "x"
             size_hint_x: .1
+            on_release:root.closebutton()
 
     BoxLayout:
         orientation:"vertical"
@@ -47,16 +94,16 @@
             size_hint_y:None
             height: 100
             Label:
-                id:info
+                id:infologin
                 text:""
                 markup:True
                 size_hint_y:None
                 height:20
             TextInput:
+                focus: True
                 id:username_field
                 hint_text: "Username"
                 multiline: False
-                focus:True
                 on_text_validate: pwd_field.focus=True
 
             TextInput:
@@ -64,7 +111,7 @@
                 hint_text: "Password"
                 multiline: False
                 password:True
-                on_text_validate:root.validate_user()
+                on_text_validate:root.validate_user();
 
         Button:
             text: "Sign in"
@@ -73,6 +120,116 @@
             background_color: (.06,.45,.45,1)
             background_normal: ""
             on_release:root.validate_user()
+
+        Button:
+            text: "Create an Account"
+            size_hint_y:None
+            height: 40
+            background_color: (.06,.45,.45,1)
+            background_normal: ""
+            on_release: app.root.current="register"
+
+        Label:
+            height: 40
+
+
+<RegisterWindow>:
+    name:"register"
+    id:reg_win
+    orientation: "vertical"
+    spacing: 10
+    space_x:self.size[0]/3
+
+    canvas.before:
+        Color:
+            rgba: (1,1,1,1)
+
+        Rectangle:
+            size: self.size
+            pos: self.pos
+
+    BoxLayout:
+        size_hint_y: None
+        height: 50
+
+        canvas.before:
+            Color:
+                rgba: (.06,.45,.45,1)
+
+            Rectangle:
+                size: self.size
+                pos: self.pos
+        Label:
+            text: "Register"
+            bold: True
+            size_hint_x: .9
+
+        FlatButton:
+            text: "x"
+            size_hint_x: .1
+            on_release:root.closebutton()
+
+
+    BoxLayout:
+        orientation:"vertical"
+        padding: reg_win.space_x, 10
+        spacing:20
+
+        BoxLayout:
+            orientation: "vertical"
+            spacing: 10
+            size_hint_y:None
+            height: 180
+            Label:
+                id:inforegister
+                text:""
+                markup:True
+                size_hint_y:None
+                height:20
+
+            TextInput:
+                id:name_register
+                hint_text: "Name"
+                multiline: False
+                focus:True
+                on_text_validate: email_register.focus=True
+
+            TextInput:
+                id:email_register
+                hint_text: "Email"
+                multiline: False
+                on_text_validate: username_register.focus=True
+
+
+            TextInput:
+                id:username_register
+                hint_text: "Username"
+                multiline: False
+                on_text_validate: password_register.focus=True
+
+            TextInput:
+                id:password_register
+                hint_text: "Password"
+                multiline: False
+                password:True
+                on_text_validate: root.completeregister()
+
+
+        Button:
+            text: "Register"
+            size_hint_y:None
+            height: 40
+            background_color: (.06,.45,.45,1)
+            background_normal: ""
+            on_release:root.completeregister()
+
+        Button:
+            text: "Back"
+            size_hint_y:None
+            height: 40
+            background_color: (.06,.45,.45,1)
+            background_normal: ""
+            on_release:app.root.current="login"
 
         Label:
             height: 40
