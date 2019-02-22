@@ -1,2 +1,2 @@
 # temporary
-first project
+Kivy app development!
